@@ -1,6 +1,6 @@
 // import functions and grab DOM elements
 import { renderMushroom, renderFriend } from './render-utils.js';
-import findFriendByName from './data-utils.js';
+// import findFriendByName from './data-utils.js';
 
 const friendsEl = document.querySelector('.friends');
 const friendInputEl = document.getElementById('friend-input');
@@ -34,11 +34,18 @@ const friendData = [
 addFriendButton.addEventListener('click', () => {
     // get the name from the input
     // create a new friend object
+    let newFriend = {
+        name: friendInputEl.value,
+        satisfaction: Math.ceil(Math.random() * 2)
+    };
     
     // push it into the friends state array, passed in as an argument
+    friendData.push(newFriend);
 
     // reset the input
+    friendInputEl.value = '';
     // display all the friends (use a function here)
+    displayFriends();
 });
 
 
@@ -56,31 +63,40 @@ addMushroomButton.addEventListener('click', () => {
 
 function displayFriends() {
     // clear out the friends in DOM
-
+    friendsEl.textContent = '';
     // for each friend in state . . .
     for (let friend of friendData) {
         const friendEl = renderFriend(friend);
+        console.log(friendEl);
 
-        // this is a clickable list, so . . .
-        //     add an event listener to each friend
-        //         on click, go find the clicked friend in state
-        
-        //         and if the friend's satisfaction level is below 3 and you have mushrooms left
-        //             increment the friends satisfaction and decrement your mushrooms
-        //             mushroomCount--;
-        //             then display your friends and mushrooms with the updated state
-    
-        // append the friendEl to the friends list in DOM
+        friendEl.addEventListener('click', () => {
+            console.log(friend.satisfaction);
+            if (friend.satisfaction < 3) {
+                if (mushroomCount > 0) {
+                    friend.satisfaction++;
+                    mushroomCount--;
+                } else {
+                    alert('You are all out of mushrooms. Go forage to find more.');
+                }
+                
+            }
+            displayMushrooms();
+            displayFriends();
+            
+        });
+        friendsEl.append(friendEl);
     }
-    
 }
 
 
 function displayMushrooms() { 
     // clear out the mushroom div
+    mushroomsEl.textContent = '';
 
     for (let i = 0; i < mushroomCount; i++) { 
         // for each mushroom in your mushroom state, render and append a mushroom
+        let mushies = renderMushroom();
+        mushroomsEl.append(mushies);
     }
 }
 
