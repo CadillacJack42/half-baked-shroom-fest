@@ -67,7 +67,6 @@ function displayFriends() {
     // for each friend in state . . .
     for (let friend of friendData) {
         const friendEl = renderFriend(friend);
-        console.log(friendEl);
 
         friendEl.addEventListener('click', () => {
             console.log(friend.satisfaction);
