@@ -14,7 +14,7 @@ export function renderFriend(friend) {
     const friendFace = document.createElement('span');
 
     // put the friend's name in the nameEl
-    friendName.textContent = friend.name;
+    friendName.textContent = friend.name || 'No Name Johnny';
     
     // for each friend, set the emojiEl's text content to a different emoji depending on their satisfaction level
     switch (friend.satisfaction) {
